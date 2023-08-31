@@ -1,22 +1,47 @@
 import { Web3Button } from "@thirdweb-dev/react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
+import { useState } from "react";
 
+const KeyCross= process.env.NEXT_PUBLIC_CROSSMINT_CLIENT_ID;
 export default function Component() {
+  const [quantity, setQuantity] = useState(1);
+  const unitPrice = 0.01; // price for one item
+
+  const handleQuantityChange = (e) => {
+    setQuantity(e.target.value);
+  };
+
+  const totalPrice = (unitPrice * quantity).toFixed(2);
   return (
     <div className='main-pg'>
-  <iframe
-    src="https://gateway.ipfscdn.io/ipfs/QmbAgC8YwY36n8H2kuvSWsRisxDZ15QZw3xGZyk9aDvcv7/erc721.html?contract=0x92eAF2C25bc4d33a1D2Ace072AdBA918c0ddafE2&chain=%7B%22name%22%3A%22Goerli%22%2C%22chain%22%3A%22ETH%22%2C%22rpc%22%3A%5B%22https%3A%2F%2Fgoerli.rpc.thirdweb.com%2F5a9bc94b87f7cbbbfbbc234bf1e07f0adf5f3cf3012c9f26f9fc9820d64df93a%22%5D%2C%22nativeCurrency%22%3A%7B%22name%22%3A%22Goerli+Ether%22%2C%22symbol%22%3A%22ETH%22%2C%22decimals%22%3A18%7D%2C%22shortName%22%3A%22gor%22%2C%22chainId%22%3A5%2C%22testnet%22%3Atrue%2C%22slug%22%3A%22goerli%22%7D"
-    width="550px"
-    height="550px"
-    frameborder="30"
-    ></iframe>
-     <CrossmintPayButton
-     className="bt-cross"
-     clientId="764abbf0-ef42-42cf-9760-7d4f56551763"
-     mintConfig={{"type":"thirdweb-drop","totalPrice":"0.001","quantity":"1"}}
-     environment="staging"   
- />
-<h3 className="footer">Developed by Mirac.eth</h3>
- </div>
-  )
+<iframe
+    src="https://embed.ipfscdn.io/ipfs/bafybeihazpt6pkm4azgtupdz7hc2j3o4zpjsvtcgfq4t2keozxkss3ud6q/?contract=0x1aBEC07a048bC63026900A2C52aFde82da5431CB&chain=%7B%22name%22%3A%22Mumbai%22%2C%22chain%22%3A%22Polygon%22%2C%22rpc%22%3A%5B%22https%3A%2F%2Fmumbai.rpc.thirdweb.com%2F%24%7BTHIRDWEB_API_KEY%7D%22%5D%2C%22nativeCurrency%22%3A%7B%22name%22%3A%22MATIC%22%2C%22symbol%22%3A%22MATIC%22%2C%22decimals%22%3A18%7D%2C%22shortName%22%3A%22maticmum%22%2C%22chainId%22%3A80001%2C%22testnet%22%3Atrue%2C%22slug%22%3A%22mumbai%22%2C%22icon%22%3A%7B%22url%22%3A%22ipfs%3A%2F%2FQmcxZHpyJa8T4i63xqjPYrZ6tKrt55tZJpbXcjSDKuKaf9%2Fpolygon%2F512.png%22%2C%22height%22%3A512%2C%22width%22%3A512%2C%22format%22%3A%22png%22%7D%7D&clientId=b348d6571045948f6cc34cffc3589041&primaryColor=purple"
+    width="600px"
+    height="600px"
+    style={{maxWidth:"100%;"}}
+    frameborder="0"
+></iframe>
+<div className="action-container">
+        <input
+          type="number"
+          value={quantity}
+          onChange={handleQuantityChange}
+          placeholder="Qty"
+        />
+        <span>Total Price: ${totalPrice}</span>
+        <CrossmintPayButton
+          className="bt-cross"
+        clientId={KeyCross}
+        projectId="c3f0a656-9ef0-4bcd-b5f2-2982578a8d2d"
+        mintConfig={{
+          "type": "thirdweb-drop",
+          "totalPrice": `${totalPrice}`,
+          "quantity": `${quantity}`
+        }}
+        environment="staging"
+      />
+      <h3 className="footer">Developed by Mirac.eth</h3>
+    </div>
+    </div>
+  );
 }
