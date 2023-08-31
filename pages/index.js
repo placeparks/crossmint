@@ -1,8 +1,8 @@
-import { Web3Button } from "@thirdweb-dev/react";
 import { CrossmintPayButton } from "@crossmint/client-sdk-react-ui";
 import { useState } from "react";
 
 const KeyCross= process.env.NEXT_PUBLIC_CROSSMINT_CLIENT_ID;
+const projectId= process.env.NEXT_PUBLIC_TEMPLATE_PROJECT_ID;
 export default function Component() {
   const [quantity, setQuantity] = useState(1);
   const unitPrice = 0.01; // price for one item
@@ -32,7 +32,7 @@ export default function Component() {
         <CrossmintPayButton
           className="bt-cross"
         clientId={KeyCross}
-        projectId="c3f0a656-9ef0-4bcd-b5f2-2982578a8d2d"
+        projectId={projectId}
         mintConfig={{
           "type": "thirdweb-drop",
           "totalPrice": `${totalPrice}`,
